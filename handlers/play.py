@@ -97,7 +97,7 @@ async def generate_cover(requested_by, title, views, duration, thumbnail):
 @errors
 async def play(_, message: Message):
 
-    lel = await message.reply("🔄 **Processing** Sounds...")
+    lel = await message.reply("🔄 **Processing** Sounds...(Note: Add @AsunaMusic to play music in vc)")
     sender_id = message.from_user.id
     sender_name = message.from_user.first_name
 
@@ -116,7 +116,7 @@ async def play(_, message: Message):
     url = get_url(message)
 
     if audio:
-        if round(audio.duration / 30) > DURATION_LIMIT:
+        if round(audio.duration / 60) > DURATION_LIMIT:
             raise DurationLimitError(
                 f"❌ Videos longer than {DURATION_LIMIT} minute(s) aren't allowed to play!"
             )
@@ -185,7 +185,7 @@ async def play(_, message: Message):
         await generate_cover(requested_by, title, views, duration, thumbnail)     
         file_path = await converter.convert(youtube.download(url))
     else:
-        await lel.edit("🔎 **Finding** the song...")
+        await lel.edit("🔎 **Finding** the song...(Note: Add @AsunaMusic to play music in vc)")
         sender_id = message.from_user.id
         user_id = message.from_user.id
         sender_name = message.from_user.first_name
@@ -196,7 +196,7 @@ async def play(_, message: Message):
         for i in message.command[1:]:
             query += ' ' + str(i)
         print(query)
-        await lel.edit("🎵 **Processing** sounds...")
+        await lel.edit("🎵 **Processing** sounds...(Note: Add @AsunaMusic to play music in vc)")
         ydl_opts = {"format": "bestaudio[ext=m4a]"}
         try:
             results = YoutubeSearch(query, max_results=1).to_dict()
